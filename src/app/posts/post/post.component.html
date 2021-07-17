@@ -1,1 +1,6 @@
-<p>post works!</p>
+<ng-content></ng-content>
+<ul>
+  <li (click)="onPostDetailsPage.emit(post?.id)">{{ post?.title }}</li>
+  <li>{{ post?.body }}</li>
+</ul>
+<input type="text">

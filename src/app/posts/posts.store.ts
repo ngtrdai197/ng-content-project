@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { switchMap } from 'rxjs/operators';
 import { IPostStore } from '../../core/interfaces/post.interface';
 import { PostsService } from '../../core/services/posts.service';
 
 @Injectable()
-export class PostStore extends ComponentStore<IPostStore> {
-	public readonly vm$ = this.select(this.state$, ({ posts, postSelected }) => ({
+export class PostsStore extends ComponentStore<IPostStore> {
+	public readonly vm$ = this.select(this.state$, ({ posts }) => ({
 		posts,
-		postSelected,
 	}));
-	constructor(private readonly postsService: PostsService) {
+
+	constructor(
+		private readonly postsService: PostsService,
+		private readonly router: Router,
+	) {
 		super({
 			posts: [],
-			postSelected: undefined,
 		});
 
 		this.fetchPostsEffect();
@@ -33,4 +36,8 @@ export class PostStore extends ComponentStore<IPostStore> {
 			),
 		),
 	);
+
+	public gotoPostDetails(postId: string) {
+		this.router.navigate(['/post-details', postId]);
+	}
 }

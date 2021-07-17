@@ -1,1 +1,23 @@
-<p>posts works!</p>
+<ng-container *ngIf="vm$ | async as vm">
+	<app-post *ngFor="let post of vm.posts | slice: 0:1" [post]="post"
+		(onPostDetailsPage)="onNavigatePostDetailsPage($event)">
+		<app-post-header headerName="Navbar component">
+			<app-button (submit)="onLogout()">
+				<button>Logout</button>
+			</app-button>
+		</app-post-header>
+	</app-post>
+	<!--	<app-post *ngFor="let post of vm.posts">-->
+	<!--		<ng-container-->
+	<!--			[ngTemplateOutlet]="content.templateRef"-->
+	<!--			[ngTemplateOutletContext]="{ post: post }"-->
+	<!--		></ng-container>-->
+	<!--	</app-post>-->
+</ng-container>
+
+<ng-template appPostContent let-post="post">
+	<ul>
+		<li>{{ post?.title }}</li>
+		<li>{{ post?.body }}</li>
+	</ul>
+</ng-template>
